@@ -1,11 +1,10 @@
 import Mongoose, { Schema } from 'mongoose';
-import RhythmData from './rhythm_data_model';
 
 const SubjectModel = new Schema({
   id: String,
-  results: [RhythmData.schema],
+  results: [Object],
 });
 
-const Subject = Mongoose.model('Lesson', SubjectModel);
+const Subject = Mongoose.model('Subject', SubjectModel);
 
 export default Subject;
