@@ -59,16 +59,13 @@ export const addErrorPercent = (req, res) => {
     if (subject == null) {
       console.log('no subject found');
     } else {
-      const resultData = subject.results[req.body.lesson_id].attempts;
-      console.log('resultData', resultData);
-      if (resultData.length === req.body.attempt) {
-        resultData.push({
+      if (subject.results[req.body.lesson_id].attempts.length === req.body.attempt) {
+        subject.results[req.body.lesson_id].attempts.push({
           errorPercent: req.body.percent,
         });
       } else {
-        resultData[req.body.attempt].errorPercent = req.body.percent;
+        subject.results[req.body.lesson_id].attempts[req.body.attempt].errorPercent = req.body.percent;
       }
-      subject.results[req.body.lesson_id].attempts = resultData;
       Subject.updateOne({ id: req.body.id, results: subject.results }).then((nextRes) => {
         res.send(nextRes);
       });
@@ -87,15 +84,13 @@ export const addAccuracyPercent = (req, res) => {
     if (subject == null) {
       console.log('no subject found');
     } else {
-      const resultData = subject.results[req.body.lesson_id].attempts;
-      if (resultData.length === req.body.attempt) {
-        resultData.push({
+      if (subject.results[req.body.lesson_id].attempts.length === req.body.attempt) {
+        subject.results[req.body.lesson_id].attempts.push({
           accuracyPercent: req.body.percent,
         });
       } else {
-        resultData[req.body.attempt].accuracyPercent = req.body.percent;
+        subject.results[req.body.lesson_id].attempts[req.body.attempt].accuracyPercent = req.body.percent;
       }
-      subject.results[req.body.lesson_id].attempts = resultData;
       Subject.updateOne({ id: req.body.id, results: subject.results }).then((nextRes) => {
         res.send(nextRes);
       });
