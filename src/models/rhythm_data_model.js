@@ -1,7 +1,7 @@
 import mongoose, { Schema } from 'mongoose';
 
 const RhythmDataModel = new Schema({
-  id: String,
+  attemptNum: Number,
   errorPercent: Number,
   accuracyPercent: Number,
   affectPercent: Number,

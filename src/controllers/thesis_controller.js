@@ -69,7 +69,7 @@ export const addErrorPercent = (req, res) => {
         resultData[req.body.attempt].errorPercent = req.body.percent;
       }
       subject.results[req.body.lesson_id].attempts = resultData;
-      subject.save().then((nextRes) => {
+      Subject.updateOne({ id: req.body.id, results: subject.results }).then((nextRes) => {
         res.send(nextRes);
       });
     }
@@ -96,7 +96,7 @@ export const addAccuracyPercent = (req, res) => {
         resultData[req.body.attempt].accuracyPercent = req.body.percent;
       }
       subject.results[req.body.lesson_id].attempts = resultData;
-      subject.save().then((nextRes) => {
+      Subject.updateOne({ id: req.body.id, results: subject.results }).then((nextRes) => {
         res.send(nextRes);
       });
     }
