@@ -35,9 +35,11 @@ export const addAffectPercent = (req, res) => {
       if (resultData.length === req.body.attempt) {
         resultData.push({
           affectPercent: req.body.percent,
+          affectDataframe: req.body.dataframe,
         });
       } else {
         resultData[req.body.attempt].affectPercent = req.body.percent;
+        resultData[req.body.attempt].affectDataframe = req.body.dataframe;
       }
       subject.save().then((nextRes) => {
         res.send(nextRes);
@@ -66,6 +68,7 @@ export const addErrorPercent = (req, res) => {
       } else {
         resultData[req.body.attempt].errorPercent = req.body.percent;
       }
+      subject.results[req.body.lesson_id].attempts = resultData;
       subject.save().then((nextRes) => {
         res.send(nextRes);
       });

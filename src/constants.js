@@ -47,7 +47,7 @@ const socketRoutes = {
   REJOIN_GAME_STUDENT: 'rejoinGameStudent',
 };
 
-const NUMBER_OF_DATA_OBJECTS = 10;
+const NUMBER_OF_DATA_OBJECTS = 20;
 
 export {
   difficulties,
