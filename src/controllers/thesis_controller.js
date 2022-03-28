@@ -95,6 +95,7 @@ export const addAccuracyPercent = (req, res) => {
       } else {
         resultData[req.body.attempt].accuracyPercent = req.body.percent;
       }
+      subject.results[req.body.lesson_id].attempts = resultData;
       subject.save().then((nextRes) => {
         res.send(nextRes);
       });
