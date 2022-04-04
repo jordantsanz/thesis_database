@@ -15,4 +15,7 @@ router.route('/accuracy')
 router.route('/error')
   .put(ThesisController.addErrorPercent);
 
+router.route('/newattempt')
+  .post(ThesisController.addNewAttempt);
+
 export default router;

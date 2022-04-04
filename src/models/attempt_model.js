@@ -1,12 +1,12 @@
 import mongoose, { Schema } from 'mongoose';
 
-const RhythmDataModel = new Schema({
+const AttemptModel = new Schema({
   attemptNum: Number,
   errorPercent: Number,
   accuracyPercent: Number,
   affectPercent: Number,
 });
 
-const RhythmData = mongoose.model('RhythmData', RhythmDataModel);
+const Attempt = mongoose.model('RhythmData', AttemptModel);
 
-export default RhythmData;
+export default Attempt;

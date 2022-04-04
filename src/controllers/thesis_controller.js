@@ -1,6 +1,7 @@
 /* eslint-disable camelcase */
 import Subject from '../models/subject_model';
 import { NUMBER_OF_DATA_OBJECTS } from '../constants';
+// import Attempt from '../models/attempt_model';
 
 // needs: id of subject
 export const createNewSubject = (req, res) => {
@@ -58,22 +59,50 @@ export const addErrorPercent = (req, res) => {
   Subject.findOne({ id: req.body.id }).then((subject) => {
     if (subject == null) {
       console.log('no subject found');
-    } else {
-      if (subject.results[req.body.lesson_id].attempts.length === req.body.attempt) {
-        subject.results[req.body.lesson_id].attempts.push({
-          errorPercent: req.body.percent,
-        });
-      } else {
-        subject.results[req.body.lesson_id].attempts[req.body.attempt].errorPercent = req.body.percent;
-      }
-      Subject.updateOne({ id: req.body.id, results: subject.results }).then((nextRes) => {
-        res.send(nextRes);
-      });
     }
+    subject.results[req.body.lesson_id].attempts[req.body.attempt].errorPercent = req.body.percent;
+    Subject.updateOne({ id: req.body.id, results: subject.results }).then((nextRes) => {
+      res.send(nextRes);
+    });
   })
     .catch((error) => {
       console.log('error adding affect percent', error);
       res.send(500);
+    });
+};
+
+export const addNewAttempt = (req, res) => {
+  console.log('req body in add new attempt: ', req.body);
+  Subject.findOne({ id: req.body.id }).then((subject) => {
+    if (req.body.attempt == null || req.body.attempt === undefined) {
+      res.sendStatus(501);
+    }
+    if (subject === undefined || subject == null) {
+      res.sendStatus(502);
+    }
+    if (req.body.lesson_id == null || req.body.lesson_id === undefined) {
+      res.sendStatus(503);
+    }
+
+    const newAttempt = {
+      accuracyPercent: -1,
+      errorPercent: -1,
+      affectPercent: -1,
+      isControl: req.body.isControl,
+    };
+
+    console.log(subject, 'subject');
+    console.log(subject.results);
+
+    subject.results[req.body.lesson_id].attempts.push(newAttempt);
+    Subject.updateOne({ id: req.body.id }, subject).then((s) => {
+      res.send(s);
+    });
+  })
+
+    .catch((error) => {
+      console.log('some error happend while making a new attempt');
+      res.sendStatus(505);
     });
 };
 
@@ -83,18 +112,19 @@ export const addAccuracyPercent = (req, res) => {
   Subject.findOne({ id: req.body.id }).then((subject) => {
     if (subject == null) {
       console.log('no subject found');
-    } else {
-      if (subject.results[req.body.lesson_id].attempts.length === req.body.attempt) {
-        subject.results[req.body.lesson_id].attempts.push({
-          accuracyPercent: req.body.percent,
-        });
-      } else {
-        subject.results[req.body.lesson_id].attempts[req.body.attempt].accuracyPercent = req.body.percent;
-      }
-      Subject.updateOne({ id: req.body.id, results: subject.results }).then((nextRes) => {
-        res.send(nextRes);
-      });
     }
+    subject.results[req.body.lesson_id].attempts[req.body.attempt].accuracyPercent = req.body.percent;
+    // } else {
+    //   if (subject.results[req.body.lesson_id].attempts.length === req.body.attempt) {
+    //     subject.results[req.body.lesson_id].attempts.push({
+    //       accuracyPercent: req.body.percent,
+    //     });
+    //   } else {
+    //     subject.results[req.body.lesson_id].attempts[req.body.attempt].accuracyPercent = req.body.percent;
+    //   }
+    Subject.updateOne({ id: req.body.id, results: subject.results }).then((nextRes) => {
+      res.send(nextRes);
+    });
   })
     .catch((error) => {
       console.log('error adding affect percent', error);
