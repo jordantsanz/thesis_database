@@ -9,8 +9,8 @@ router.route('/newSubject')
 router.route('/affect')
   .put(ThesisController.addAffectPercent);
 
-router.route('/accuracy')
-  .put(ThesisController.addAccuracyPercent);
+router.route('/percents')
+  .put(ThesisController.addAccuracyAndErrorPercent);
 
 router.route('/error')
   .put(ThesisController.addErrorPercent);

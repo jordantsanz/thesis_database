@@ -107,13 +107,14 @@ export const addNewAttempt = (req, res) => {
 };
 
 // needs: id of subject, lesson number, percent: percent of data
-export const addAccuracyPercent = (req, res) => {
+export const addAccuracyAndErrorPercent = (req, res) => {
   console.log('req body in accuracy percent', req.body);
   Subject.findOne({ id: req.body.id }).then((subject) => {
     if (subject == null) {
       console.log('no subject found');
     }
     subject.results[req.body.lesson_id].attempts[req.body.attempt].accuracyPercent = req.body.percent;
+    subject.results[req.body.lesson_id].attempts[req.body.attempt].errorPercent = req.body.errorPercent;
     // } else {
     //   if (subject.results[req.body.lesson_id].attempts.length === req.body.attempt) {
     //     subject.results[req.body.lesson_id].attempts.push({
