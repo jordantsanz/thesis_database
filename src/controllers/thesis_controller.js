@@ -89,6 +89,7 @@ export const addNewAttempt = (req, res) => {
       errorPercent: -1,
       affectPercent: -1,
       isControl: req.body.isControl,
+      bpm: req.body.bpm,
     };
 
     console.log(subject, 'subject');
