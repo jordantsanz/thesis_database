@@ -87,6 +87,7 @@ export const addNewAttempt = (req, res) => {
     const newAttempt = {
       accuracyPercent: -1,
       errorPercent: -1,
+      errorArray: [],
       affectPercent: -1,
       isControl: req.body.isControl,
       bpm: req.body.bpm,
@@ -116,6 +117,7 @@ export const addAccuracyAndErrorPercent = (req, res) => {
     }
     subject.results[req.body.lesson_id].attempts[req.body.attempt].accuracyPercent = req.body.percent;
     subject.results[req.body.lesson_id].attempts[req.body.attempt].errorPercent = req.body.errorPercent;
+    subject.results[req.body.lesson_id].attempts[req.body.attempt].errorArray = req.body.errorArray;
     // } else {
     //   if (subject.results[req.body.lesson_id].attempts.length === req.body.attempt) {
     //     subject.results[req.body.lesson_id].attempts.push({
