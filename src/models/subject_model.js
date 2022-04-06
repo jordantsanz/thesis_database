@@ -3,8 +3,10 @@ import Mongoose, { Schema } from 'mongoose';
 const SubjectModel = new Schema({
   id: String,
   isControl: Boolean,
-  finalOverallTimeLeft: Object,
-  finalTaskTimeSpent: Object,
+  finalOverallTimeLeftMin: Number,
+  finalOverallTimeLeftSec: Number,
+  finalTaskTimeSpentMin: Number,
+  finalTaskTimeSpentSec: Number,
   paymentString: String,
   results: [Object],
 });

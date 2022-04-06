@@ -8,9 +8,11 @@ export const createNewSubject = (req, res) => {
   const subject = new Subject();
   subject.id = req.body.id;
   subject.isControl = req.body.isControl;
-  subject.finalOverallTimeLeft = {};
+  subject.finalOverallTimeLeftMin = 0;
+  subject.finalOverallTimeLeftSec = 0;
   subject.paymentString = '';
-  subject.finalTaskTimeSpent = {};
+  subject.finalTaskTimeSpentMin = 0;
+  subject.finalTaskTimeSpentSec = 0;
   subject.results = [];
   for (let i = 0; i < NUMBER_OF_DATA_OBJECTS; i += 1) {
     const data = {};
@@ -30,8 +32,10 @@ export const createNewSubject = (req, res) => {
 
 export const addFinalStats = (req, res) => {
   Subject.findOne({ id: req.body.id }).then((subject) => {
-    subject.finalOverallTimeLeft = req.body.timerStats;
-    subject.finalTaskTimeSpent = req.body.stopwatchStats;
+    subject.finalOverallTimeLeftMin = req.body.timerStats.minutes;
+    subject.finalOverallTimeLeftSec = req.body.timerStats.seconds;
+    subject.finalTaskTimeSpentMin = req.body.stopwatchStats.minutes;
+    subject.finalTaskTimeSpentSec = req.body.stopwatchStats.seconds;
     subject.paymentString = req.body.string;
 
     Subject.updateOne({ id: req.body.id, results: subject.results }).then((nextRes) => {
