@@ -7,6 +7,7 @@ import { NUMBER_OF_DATA_OBJECTS } from '../constants';
 export const createNewSubject = (req, res) => {
   const subject = new Subject();
   subject.id = req.body.id;
+  subject.isControl = req.body.isControl;
   subject.results = [];
   for (let i = 0; i < NUMBER_OF_DATA_OBJECTS; i += 1) {
     const data = {};
@@ -90,7 +91,6 @@ export const addNewAttempt = (req, res) => {
       errorArray: [],
       accuracyArray: [],
       affectPercent: -1,
-      isControl: req.body.isControl,
       bpm: req.body.bpm,
     };
 
