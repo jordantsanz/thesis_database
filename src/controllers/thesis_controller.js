@@ -31,14 +31,29 @@ export const createNewSubject = (req, res) => {
 };
 
 export const addFinalStats = (req, res) => {
+  console.log('add final stats called');
   Subject.findOne({ id: req.body.id }).then((subject) => {
+    console.log('id: ', req.body.id, 'rest: ', req.body);
+    console.log('subejct: ', subject);
     subject.finalOverallTimeLeftMin = req.body.timerStats.minutes;
+    console.log('set min 1');
     subject.finalOverallTimeLeftSec = req.body.timerStats.seconds;
+    console.log('set sec 1');
     subject.finalTaskTimeSpentMin = req.body.stopwatchStats.minutes;
+    console.log('set min2');
     subject.finalTaskTimeSpentSec = req.body.stopwatchStats.seconds;
+    console.log('set sec 2');
     subject.paymentString = req.body.string;
+    console.log('subject after updating: ');
 
-    Subject.updateOne({ id: req.body.id, results: subject.results }).then((nextRes) => {
+    Subject.updateOne({
+      id: req.body.id,
+      finalOverallTimeLeftMin: subject.finalOverallTimeLeftMin,
+      finalOverallTimeLeftSec: subject.finalOverallTimeLeftSec,
+      finalTaskTimeSpentMin: subject.finalTaskTimeSpentMin,
+      finalTaskTimeSpentSec: subject.finalTaskTimeSpentSec,
+    }).then((nextRes) => {
+      console.log('after updat one)');
       res.send(nextRes);
     });
   });
