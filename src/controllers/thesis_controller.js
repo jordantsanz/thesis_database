@@ -8,6 +8,9 @@ export const createNewSubject = (req, res) => {
   const subject = new Subject();
   subject.id = req.body.id;
   subject.isControl = req.body.isControl;
+  subject.finalOverallTimeLeft = {};
+  subject.paymentString = '';
+  subject.finalTaskTimeSpent = {};
   subject.results = [];
   for (let i = 0; i < NUMBER_OF_DATA_OBJECTS; i += 1) {
     const data = {};
@@ -23,6 +26,18 @@ export const createNewSubject = (req, res) => {
       console.log('error creating subject:', error);
       res.status(500).send(error);
     });
+};
+
+export const addFinalStats = (req, res) => {
+  Subject.findOne({ id: req.body.id }).then((subject) => {
+    subject.finalOverallTimeLeft = req.body.timerStats;
+    subject.finalTaskTimeSpent = req.body.stopwatchStats;
+    subject.paymentString = req.body.string;
+
+    Subject.updateOne({ id: req.body.id, results: subject.results }).then((nextRes) => {
+      res.send(nextRes);
+    });
+  });
 };
 
 // needs: id of subject, lesson number, any data to add

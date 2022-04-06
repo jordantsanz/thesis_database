@@ -18,4 +18,7 @@ router.route('/error')
 router.route('/newattempt')
   .post(ThesisController.addNewAttempt);
 
+router.route('/final')
+  .put(ThesisController.addFinalStats);
+
 export default router;
