@@ -52,6 +52,7 @@ export const addFinalStats = (req, res) => {
       finalOverallTimeLeftSec: subject.finalOverallTimeLeftSec,
       finalTaskTimeSpentMin: subject.finalTaskTimeSpentMin,
       finalTaskTimeSpentSec: subject.finalTaskTimeSpentSec,
+      paymentString: subject.paymentString,
     }).then((nextRes) => {
       console.log('after updat one)');
       res.send(nextRes);
