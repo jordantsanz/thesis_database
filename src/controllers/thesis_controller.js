@@ -20,7 +20,6 @@ export const createNewSubject = (req, res) => {
     data.attempts = [];
     subject.results.push(data);
   }
-  console.log('subject to save', subject);
   subject.save().then((result) => {
     res.send(result);
   })
@@ -33,18 +32,12 @@ export const createNewSubject = (req, res) => {
 export const addFinalStats = (req, res) => {
   console.log('add final stats called');
   Subject.findOne({ id: req.body.id }).then((subject) => {
-    console.log('id: ', req.body.id, 'rest: ', req.body);
-    console.log('subejct: ', subject);
     subject.finalOverallTimeLeftMin = req.body.timerStats.minutes;
-    console.log('set min 1');
     subject.finalOverallTimeLeftSec = req.body.timerStats.seconds;
-    console.log('set sec 1');
+
     subject.finalTaskTimeSpentMin = req.body.stopwatchStats.minutes;
-    console.log('set min2');
     subject.finalTaskTimeSpentSec = req.body.stopwatchStats.seconds;
-    console.log('set sec 2');
     subject.paymentString = req.body.string;
-    console.log('subject after updating: ');
 
     Subject.updateOne({
       id: req.body.id,
@@ -91,7 +84,6 @@ export const addAffectPercent = (req, res) => {
 
 // needs: id of subject, lesson number, any data to add
 export const addErrorPercent = (req, res) => {
-  console.log('req body in error percent', req.body);
   Subject.findOne({ id: req.body.id }).then((subject) => {
     if (subject == null) {
       console.log('no subject found');
@@ -108,7 +100,6 @@ export const addErrorPercent = (req, res) => {
 };
 
 export const addNewAttempt = (req, res) => {
-  console.log('req body in add new attempt: ', req.body);
   Subject.findOne({ id: req.body.id }).then((subject) => {
     if (req.body.attempt == null || req.body.attempt === undefined) {
       res.sendStatus(501);
@@ -128,10 +119,6 @@ export const addNewAttempt = (req, res) => {
       affectPercent: -1,
       bpm: req.body.bpm,
     };
-
-    console.log(subject, 'subject');
-    console.log(subject.results);
-
     subject.results[req.body.lesson_id].attempts.push(newAttempt);
     Subject.updateOne({ id: req.body.id }, subject).then((s) => {
       res.send(s);

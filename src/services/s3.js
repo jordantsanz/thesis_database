@@ -2,8 +2,10 @@ import aws from 'aws-sdk';
 
 const signS3 = (req, res) => {
   const s3 = new aws.S3();
+  console.log('s3: ', s3);
   const fileName = req.query['file-name'];
   const fileType = req.query['file-type'];
+  console.log('filename and filetype: ', fileName, fileType);
   const s3Params = {
     Bucket: process.env.S3_BUCKET_NAME,
     Key: fileName,
@@ -12,7 +14,10 @@ const signS3 = (req, res) => {
     ACL: 'public-read',
   };
   s3.getSignedUrl('putObject', s3Params, (err, data) => {
-    if (err) { res.status(422).end(); }
+    if (err) {
+      console.log('err: ', err);
+      res.status(422).end();
+    }
 
     const returnData = {
       signedRequest: data,
