@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import * as ThesisController from './controllers/thesis_controller';
 import signS3 from './services/s3';
+import signs3new from './services/news3';
 
 const router = Router();
 
@@ -23,5 +24,6 @@ router.route('/final')
   .put(ThesisController.addFinalStats);
 
 router.get('/sign-s3', signS3);
+router.get('/signs3', signs3new);
 
 export default router;

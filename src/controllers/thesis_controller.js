@@ -47,7 +47,6 @@ export const addFinalStats = (req, res) => {
       finalTaskTimeSpentSec: subject.finalTaskTimeSpentSec,
       paymentString: subject.paymentString,
     }).then((nextRes) => {
-      console.log('after updat one)');
       res.send(nextRes);
     });
   });
@@ -55,13 +54,11 @@ export const addFinalStats = (req, res) => {
 
 // needs: id of subject, lesson number, any data to add
 export const addAffectPercent = (req, res) => {
-  console.log('req body in affect percent', req.body);
   Subject.findOne({ id: req.body.id }).then((subject) => {
     if (subject == null) {
       console.log('no subject found');
     } else {
       const resultData = subject.results[req.body.lesson_id].attempts;
-      console.log('resultData', resultData);
       if (resultData.length === req.body.attempt) {
         resultData.push({
           affectPercent: req.body.percent,
@@ -133,7 +130,6 @@ export const addNewAttempt = (req, res) => {
 
 // needs: id of subject, lesson number, percent: percent of data
 export const addAccuracyAndErrorPercent = (req, res) => {
-  console.log('req body in accuracy percent', req.body);
   Subject.findOne({ id: req.body.id }).then((subject) => {
     if (subject == null) {
       console.log('no subject found');

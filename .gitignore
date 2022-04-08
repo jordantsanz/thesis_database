@@ -2,3 +2,6 @@ node_modules/*
 yarn*
 .yarn*
 .env
+gckey.json
+/Users/jtsan/repos/thesis_database/gckey.json
+upload/
