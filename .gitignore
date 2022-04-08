@@ -2,6 +2,8 @@ node_modules/*
 yarn*
 .yarn*
 .env
-gckey.json
+google-credentials.json
 /Users/jtsan/repos/thesis_database/gckey.json
 upload/
+google-credentials.json
+*.json

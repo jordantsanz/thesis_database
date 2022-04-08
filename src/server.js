@@ -11,6 +11,7 @@ import apiRouter from './router';
 const { Storage } = require('@google-cloud/storage');
 const path = require('path');
 const dotenv = require('dotenv');
+const fs = require('fs');
 
 dotenv.config();
 
@@ -43,6 +44,14 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 const multer = require('multer');
+
+const dir = './upload';
+
+if (fs.existsSync(dir)) {
+  console.log('Directory exists!');
+} else {
+  fs.mkdir(dir);
+}
 
 const storage = multer.diskStorage({
   destination(req, file, cb) {
