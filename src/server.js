@@ -58,7 +58,6 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 
 const gc = new Storage({
-  keyFilename: path.join(__dirname, '../gckey.json'),
   projectId: 'jsanz-thesis-new-backend',
 });
 
