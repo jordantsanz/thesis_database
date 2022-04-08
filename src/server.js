@@ -58,6 +58,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 
 const gc = new Storage({
+  keyFilename: path.join(__dirname, '../google-credentials.json'),
   projectId: 'jsanz-thesis-new-backend',
 });
 
