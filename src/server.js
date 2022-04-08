@@ -50,7 +50,9 @@ const dir = './upload';
 if (fs.existsSync(dir)) {
   console.log('Directory exists!');
 } else {
-  fs.mkdir(dir);
+  fs.mkdir(dir, (err) => {
+    console.log('err:', err);
+  });
 }
 
 const storage = multer.diskStorage({
