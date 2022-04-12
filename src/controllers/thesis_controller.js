@@ -58,16 +58,8 @@ export const addAffectPercent = (req, res) => {
     if (subject == null) {
       console.log('no subject found');
     } else {
-      const resultData = subject.results[req.body.lesson_id].attempts;
-      if (resultData.length === req.body.attempt) {
-        resultData.push({
-          affectPercent: req.body.percent,
-          affectDataframe: req.body.dataframe,
-        });
-      } else {
-        resultData[req.body.attempt].affectPercent = req.body.percent;
-        resultData[req.body.attempt].affectDataframe = req.body.dataframe;
-      }
+      subject.results[req.body.lesson_id].attempts[req.body.attempt].affectPercent = req.body.percent;
+      subject.results[req.body.lesson_id].attempts[req.body.attempt].affectDataframe = req.body.dataframe;
       subject.save().then((nextRes) => {
         res.send(nextRes);
       });
@@ -114,6 +106,7 @@ export const addNewAttempt = (req, res) => {
       errorArray: [],
       accuracyArray: [],
       affectPercent: -1,
+      affectDataframe: {},
       bpm: req.body.bpm,
     };
     subject.results[req.body.lesson_id].attempts.push(newAttempt);
