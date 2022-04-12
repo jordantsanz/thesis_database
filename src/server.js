@@ -73,7 +73,6 @@ const gc = new Storage({
   projectId: 'jsanz-thesis-new-backend',
 });
 
-gc.getBuckets().then((x) => { return console.log(x); });
 const drumBucket = gc.bucket('drum-notation-bucket');
 
 // additional init stuff should go before hitting the routing
