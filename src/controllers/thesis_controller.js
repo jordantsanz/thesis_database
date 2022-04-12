@@ -60,10 +60,11 @@ export const addAffectPercent = (req, res) => {
     } else {
       subject.results[req.body.lesson_id].attempts[req.body.attempt].affectPercent = req.body.percent;
       subject.results[req.body.lesson_id].attempts[req.body.attempt].affectDataframe = req.body.dataframe;
-      subject.save().then((nextRes) => {
-        res.send(nextRes);
-      });
     }
+
+    Subject.updateOne({ id: req.body.id, results: subject.results }).then((nextRes) => {
+      res.send(nextRes);
+    });
   })
     .catch((error) => {
       console.log('error adding affect percent', error);
