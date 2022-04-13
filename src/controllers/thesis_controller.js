@@ -1,6 +1,6 @@
 /* eslint-disable camelcase */
 import Subject from '../models/subject_model';
-import { NUMBER_OF_DATA_OBJECTS } from '../constants';
+// import { NUMBER_OF_DATA_OBJECTS } from '../constants';
 // import Attempt from '../models/attempt_model';
 
 // needs: id of subject
@@ -15,12 +15,12 @@ export const createNewSubject = (req, res) => {
   subject.finalTaskTimeSpentMin = 0;
   subject.finalTaskTimeSpentSec = 0;
   subject.results = [];
-  for (let i = 0; i < NUMBER_OF_DATA_OBJECTS; i += 1) {
-    const data = {};
-    data.lesson_id = i;
-    data.attempts = [];
-    subject.results.push(data);
-  }
+  // for (let i = 0; i < NUMBER_OF_DATA_OBJECTS; i += 1) {
+  //   const data = {};
+  //   data.lesson_id = i;
+  //   data.attempts = [];
+  //   subject.results.push(data);
+  // }
   subject.save().then((result) => {
     console.log(result, 'result');
     res.send(result);
