@@ -23,6 +23,9 @@ router.route('/newattempt')
 router.route('/final')
   .put(ThesisController.addFinalStats);
 
+router.route('/submitattempt')
+  . post(ThesisController.submitAttempt);
+
 router.get('/sign-s3', signS3);
 router.get('/signs3', signs3new);
 

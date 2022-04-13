@@ -5,6 +5,7 @@ import { NUMBER_OF_DATA_OBJECTS } from '../constants';
 
 // needs: id of subject
 export const createNewSubject = (req, res) => {
+  console.log('req is control: ', req.body);
   const subject = new Subject();
   subject.id = req.body.id;
   subject.isControl = req.body.isControl;
@@ -21,6 +22,7 @@ export const createNewSubject = (req, res) => {
     subject.results.push(data);
   }
   subject.save().then((result) => {
+    console.log(result, 'result');
     res.send(result);
   })
     .catch((error) => {
@@ -41,6 +43,7 @@ export const addFinalStats = (req, res) => {
 
     Subject.updateOne({
       id: req.body.id,
+      isControl: subject.isControl,
       finalOverallTimeLeftMin: subject.finalOverallTimeLeftMin,
       finalOverallTimeLeftSec: subject.finalOverallTimeLeftSec,
       finalTaskTimeSpentMin: subject.finalTaskTimeSpentMin,
@@ -63,6 +66,7 @@ export const addAffectPercent = (req, res) => {
     }
 
     Subject.updateOne({ id: req.body.id, results: subject.results }).then((nextRes) => {
+      console.log('next res: ', nextRes);
       res.send(nextRes);
     });
   })
@@ -86,6 +90,36 @@ export const addErrorPercent = (req, res) => {
     .catch((error) => {
       console.log('error adding affect percent', error);
       res.send(500);
+    });
+};
+
+export const submitAttempt = (req, res) => {
+  console.log('req body: ', req.body);
+  Subject.findOne({ id: req.body.id }).then((subject) => {
+    if (subject == null) {
+      console.log('no subject found');
+    }
+    const attempt = {
+      lesson_id: req.body.lesson_id,
+      attemptNumber: req.body.attempt,
+      accuracyPercent: req.body.accuracyPercent,
+      accuracyArray: req.body.accuracyArray,
+      errorPercent: req.body.errorPercent,
+      errorArray: req.body.errorArray,
+      affectPercent: req.body.affectPercent,
+      affectDataframe: req.body.affectDataframe,
+    };
+    subject.results.push(attempt);
+    Subject.updateOne({ id: req.body.id }, subject).then((nextRes) => {
+      console.log(subject);
+      console.log(nextRes);
+      res.send(nextRes);
+    });
+  })
+
+    .catch((error) => {
+      console.log('error: ', error);
+      res.send(501);
     });
 };
 
@@ -140,7 +174,7 @@ export const addAccuracyAndErrorPercent = (req, res) => {
     //   } else {
     //     subject.results[req.body.lesson_id].attempts[req.body.attempt].accuracyPercent = req.body.percent;
     //   }
-    Subject.updateOne({ id: req.body.id, results: subject.results }).then((nextRes) => {
+    Subject.updateOne({ id: req.body.id, results: subject.results, isControl: subject.isControl }).then((nextRes) => {
       res.send(nextRes);
     });
   })
