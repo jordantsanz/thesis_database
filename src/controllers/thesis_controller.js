@@ -43,13 +43,7 @@ export const addFinalStats = (req, res) => {
 
     Subject.updateOne({
       id: req.body.id,
-      isControl: subject.isControl,
-      finalOverallTimeLeftMin: subject.finalOverallTimeLeftMin,
-      finalOverallTimeLeftSec: subject.finalOverallTimeLeftSec,
-      finalTaskTimeSpentMin: subject.finalTaskTimeSpentMin,
-      finalTaskTimeSpentSec: subject.finalTaskTimeSpentSec,
-      paymentString: subject.paymentString,
-    }).then((nextRes) => {
+    }, subject).then((nextRes) => {
       res.send(nextRes);
     });
   });
@@ -108,6 +102,7 @@ export const submitAttempt = (req, res) => {
       errorArray: req.body.errorArray,
       affectPercent: req.body.affectPercent,
       affectDataframe: req.body.affectDataframe,
+      bpm: req.body.bpm,
     };
     subject.results.push(attempt);
     Subject.updateOne({ id: req.body.id }, subject).then((nextRes) => {
