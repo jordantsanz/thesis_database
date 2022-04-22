@@ -31,6 +31,11 @@ export const createNewSubject = (req, res) => {
     });
 };
 
+export const clickRegister = (req, res) => {
+  console.log('click type: ', req.body.clickType);
+  res.send(req.body.clickType);
+};
+
 export const addFinalStats = (req, res) => {
   console.log('add final stats called');
   Subject.findOne({ id: req.body.id }).then((subject) => {

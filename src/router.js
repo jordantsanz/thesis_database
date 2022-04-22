@@ -24,7 +24,10 @@ router.route('/final')
   .put(ThesisController.addFinalStats);
 
 router.route('/submitattempt')
-  . post(ThesisController.submitAttempt);
+  .post(ThesisController.submitAttempt);
+
+router.route('/click')
+  .post(ThesisController.clickRegister);
 
 router.get('/sign-s3', signS3);
 router.get('/signs3', signs3new);
