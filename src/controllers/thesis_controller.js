@@ -1,7 +1,5 @@
 /* eslint-disable camelcase */
 import Subject from '../models/subject_model';
-// import { NUMBER_OF_DATA_OBJECTS } from '../constants';
-// import Attempt from '../models/attempt_model';
 
 // needs: id of subject
 export const createNewSubject = (req, res) => {
@@ -15,12 +13,6 @@ export const createNewSubject = (req, res) => {
   subject.finalTaskTimeSpentMin = 0;
   subject.finalTaskTimeSpentSec = 0;
   subject.results = [];
-  // for (let i = 0; i < NUMBER_OF_DATA_OBJECTS; i += 1) {
-  //   const data = {};
-  //   data.lesson_id = i;
-  //   data.attempts = [];
-  //   subject.results.push(data);
-  // }
   subject.save().then((result) => {
     console.log(result, 'result');
     res.send(result);
@@ -166,14 +158,6 @@ export const addAccuracyAndErrorPercent = (req, res) => {
     subject.results[req.body.lesson_id].attempts[req.body.attempt].errorPercent = req.body.errorPercent;
     subject.results[req.body.lesson_id].attempts[req.body.attempt].errorArray = req.body.errorArray;
     subject.results[req.body.lesson_id].attempts[req.body.attempt].accuracyArray = req.body.accuracyArray;
-    // } else {
-    //   if (subject.results[req.body.lesson_id].attempts.length === req.body.attempt) {
-    //     subject.results[req.body.lesson_id].attempts.push({
-    //       accuracyPercent: req.body.percent,
-    //     });
-    //   } else {
-    //     subject.results[req.body.lesson_id].attempts[req.body.attempt].accuracyPercent = req.body.percent;
-    //   }
     Subject.updateOne({ id: req.body.id, results: subject.results, isControl: subject.isControl }).then((nextRes) => {
       res.send(nextRes);
     });
